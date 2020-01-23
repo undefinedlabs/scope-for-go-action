@@ -1,0 +1,13 @@
+name: 'Scope for Go'
+author: 'Undefined Labs'
+description: 'Automatically instruments and runs your tests using the Scope Go agent'
+inputs:
+  dsn: # scope dsn
+    description: 'Scope DSN'
+    required: true
+runs:
+  using: 'node12'
+  main: 'dist/index.js'
+branding:
+  icon: 'check-square'
+  color: 'purple'
