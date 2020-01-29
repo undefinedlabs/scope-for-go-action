@@ -1542,8 +1542,10 @@ async function run() {
     }
 
     const scopeLogsPath = `${homePath}/.scope-results`;
-    core.info("Creating scope log folder...")
-    fs.mkdirSync(scopeLogsPath);
+    if (!fs.existsSync(scopeLogsPath)) {
+      core.info("Creating scope log folder...")
+      fs.mkdirSync(scopeLogsPath);
+    }
     envVars["SCOPE_LOG_ROOT_PATH"] = scopeLogsPath;
 
     const execOptions = {
