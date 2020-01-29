@@ -33,8 +33,12 @@ steps:
         fi
 
   - name: Scope for Go
-    uses: undefinedlabs/scope-for-go-action@v1
+    uses: undefinedlabs/scope-for-go-action@v2
     with:
       dsn: ${{secrets.SCOPE_DSN}} # required
+      auto-instrument: true # optional: Auto instrument the source code with the scope agent
+      enable-benchmarks: true # optional: Enable the benchmarks execution
+      test-command: # optional: The command to execute when running tests
+      benchmark-command: # optional: The command to execute when running benchmarks
       
 ```

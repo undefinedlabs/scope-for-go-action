@@ -5,6 +5,20 @@ inputs:
   dsn: # scope dsn
     description: 'Scope DSN'
     required: true
+  test-command:
+    description: 'The command to execute when running tests'
+    required: false
+  benchmark-command:
+    description: 'The command to execute when running benchmarks'
+    required: false
+  auto-instrument:
+    description: 'Auto instrument the source code with the scope agent'
+    required: false
+    default: true
+  enable-benchmarks:
+    description: 'Enable the benchmarks execution'
+    required: false
+    default: true
 runs:
   using: 'node12'
   main: 'dist/index.js'
