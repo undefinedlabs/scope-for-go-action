@@ -1570,7 +1570,7 @@ async function run() {
     }
 
     core.info("Downloading dependencies...");
-    await exec.exec(`go get -u go.undefinedlabs.com/scopeagent`, null, execOptions);
+    await exec.exec(`go get -u go.undefinedlabs.com/scopeagent@v0.1.8`, null, execOptions);
 
     core.info("Running Tests...");
     await exec.exec(tCommand, null, { env: envVars });
