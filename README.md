@@ -40,5 +40,7 @@ steps:
       enable-benchmarks: true # optional: Enable the benchmarks execution
       test-command: # optional: The command to execute when running tests
       benchmark-command: # optional: The command to execute when running benchmarks
+      race-detector: #optional: Enable the race detector to the test command
+      no-parallel: #optional: Adds `-parallel 1` to the test command (enables CodePath for `t.Parallel()` tests)
       
 ```

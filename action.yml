@@ -19,6 +19,14 @@ inputs:
     description: 'Enable the benchmarks execution'
     required: false
     default: true
+  race-detector:
+    description: 'Enable the race detector on test command'
+    required: false
+    default: false
+  no-parallel:
+    description: 'Adds -parallel 1 argument to the test command'
+    required: false
+    default: false
 runs:
   using: 'node12'
   main: 'dist/index.js'

@@ -1529,6 +1529,8 @@ async function run() {
     const benchmark_command = core.getInput('benchmark-command');
     const auto_instrument = core.getInput('auto-instrument') || 'true';
     const enable_benchmarks = core.getInput('enable-benchmarks') || 'true';
+    const race_detector = core.getInput('race-detector') || 'false';
+    const no_parallel = core.getInput('no-parallel') || 'false';
 
     let envVars = Object.assign({}, process.env);
 
@@ -1553,7 +1555,14 @@ async function run() {
       env: envVars
     }
 
-    let tCommand = `go test -covermode=count -coverprofile=${scopeLogsPath}/coverage.out -v ./...`;
+    let addArg = ' -covermode=count';
+    if (race_detector) {
+      addArg = ' -covermode=atomic -race';
+    }
+    if (no_parallel) {
+      addArg += ' -parallel 1';
+    }
+    let tCommand = `go test -v${addArg} -coverprofile=${scopeLogsPath}/coverage.out ./...`;
     let bCommand = `go test -run Benchmark -bench=.`;
     if (test_command) {
       tCommand = test_command;
