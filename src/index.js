@@ -15,6 +15,7 @@ async function run() {
     const enable_benchmarks = core.getInput('enable-benchmarks') || 'true';
     const race_detector = core.getInput('race-detector') || 'false';
     const no_parallel = core.getInput('no-parallel') || 'false';
+    const version = core.getInput('version') || '';
 
     let envVars = Object.assign({}, process.env);
 
@@ -63,14 +64,22 @@ async function run() {
     }
 
     core.info("Downloading dependencies...");
-    await exec.exec(`go get -u go.undefinedlabs.com/scopeagent`, null, execOptions);
+    if (version) {
+      await exec.exec(`go get -u go.undefinedlabs.com/scopeagent@${version}`, null, execOptions);
+    } else {
+      await exec.exec(`go get -u go.undefinedlabs.com/scopeagent`, null, execOptions);
+    }
 
     core.info("Running Tests...");
-    await exec.exec(tCommand, null, { env: envVars });
+    const testExitCode = await exec.exec(tCommand, null, execOptions);
 
     if (enable_benchmarks === "true") {
       core.info("Running Benchmarks...");
       await exec.exec(bCommand, null, execOptions);
+    }
+
+    if (testExitCode !== 0) {
+      core.setFailed(`tests has failed with exit code: ${testExitCode}`);
     }
 
   } catch (error) {

@@ -15,22 +15,17 @@ GitHub Action to run your tests automatically instrumented with the [Scope Go ag
 
 ```yml
 steps:
-  - name: Set up Go 1.13
+  - name: Set up Go 1.14
     uses: actions/setup-go@v1
     with:
-      go-version: 1.13
+      go-version: 1.14
       id: go
 
   - name: Check out code into the Go module directory
     uses: actions/checkout@v1
 
   - name: Get dependencies
-    run: |
-        go get -v -t -d ./...
-        if [ -f Gopkg.toml ]; then
-            curl https://raw.githubusercontent.com/golang/dep/master/install.sh | sh
-            dep ensure
-        fi
+    run: go get -v -t -d ./...
 
   - name: Scope for Go
     uses: undefinedlabs/scope-for-go-action@v2
@@ -42,5 +37,5 @@ steps:
       benchmark-command: # optional: The command to execute when running benchmarks
       race-detector: #optional: Enable the race detector to the test command
       no-parallel: #optional: Adds `-parallel 1` to the test command (enables CodePath for `t.Parallel()` tests)
-      
+      version: #optional: Sets a Go Agent version (by default the latest stable release)
 ```

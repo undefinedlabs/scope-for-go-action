@@ -27,6 +27,10 @@ inputs:
     description: 'Adds -parallel 1 argument to the test command'
     required: false
     default: false
+  version:
+    description: 'Sets an Agent version'
+    required: false
+    default:
 runs:
   using: 'node12'
   main: 'dist/index.js'
