@@ -926,10 +926,10 @@ async function run() {
     const dsn = core.getInput('dsn') || process.env[SCOPE_DSN];
     const test_command = core.getInput('test-command');
     const benchmark_command = core.getInput('benchmark-command');
-    const auto_instrument = core.getInput('auto-instrument') || 'true';
-    const enable_benchmarks = core.getInput('enable-benchmarks') || 'true';
-    const race_detector = core.getInput('race-detector') || 'false';
-    const no_parallel = core.getInput('no-parallel') || 'false';
+    const auto_instrument = (core.getInput('auto-instrument') || 'true') === 'true';
+    const enable_benchmarks = (core.getInput('enable-benchmarks') || 'true') === 'true';
+    const race_detector = (core.getInput('race-detector') || 'false') === 'true';
+    const no_parallel = (core.getInput('no-parallel') || 'false') === 'true';
     const version = core.getInput('version') || '';
 
     let envVars = Object.assign({}, process.env);
@@ -971,7 +971,7 @@ async function run() {
       bCommand = benchmark_command;
     }
 
-    if (auto_instrument === "true") {
+    if (auto_instrument) {
       core.info("Installing Agent installer...");
       await exec.exec(`go get -v github.com/undefinedlabs/scope-go-agent-installer`, null, execOptions);
       core.info("Executing installer...");
@@ -988,7 +988,7 @@ async function run() {
     core.info("Running Tests...");
     const testExitCode = await exec.exec(tCommand, null, execOptions);
 
-    if (enable_benchmarks === "true") {
+    if (enable_benchmarks) {
       core.info("Running Benchmarks...");
       await exec.exec(bCommand, null, execOptions);
     }
